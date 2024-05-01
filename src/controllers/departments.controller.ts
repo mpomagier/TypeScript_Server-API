@@ -1,12 +1,13 @@
 import { PrismaClient } from "@prisma/client";
-const db = new PrismaClient();
-import { Department } from "@prisma/client";
+import { Request, Response } from "express";
 
-const getAllDepartments = async (req, res) => {
+const db = new PrismaClient();
+
+const getAllDepartments = async (req: Request, res: Response) => {
   return res.json(await db.department.findMany());
 };
 
-const getDepartmentById = async (req, res) => {
+const getDepartmentById = async (req: Request, res: Response) => {
   const { id } = req.params;
   const department = await db.department.findUnique({ where: { id } });
 
@@ -16,7 +17,7 @@ const getDepartmentById = async (req, res) => {
   return res.json(department);
 };
 
-const createDepartment = async (req, res) => {
+const createDepartment = async (req: Request, res: Response) => {
   const { name, description } = req.body;
 
   if (!name || !description)
@@ -30,7 +31,7 @@ const createDepartment = async (req, res) => {
   return res.json(await db.department.create({ data: departmentData }));
 };
 
-const updateDepartment = async (req, res) => {
+const updateDepartment = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { name, description } = req.body;
 
@@ -53,7 +54,7 @@ const updateDepartment = async (req, res) => {
   return res.json(department);
 };
 
-const deleteDepartment = async (req, res) => {
+const deleteDepartment = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const department = await db.department.delete({ where: { id } });
