@@ -3,11 +3,17 @@ import { Request, Response } from "express";
 
 const db = new PrismaClient();
 
-const getAllProducts = async (req: Request, res: Response) => {
+const getAllProducts = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   return res.json(await db.product.findMany());
 };
 
-const getProductById = async (req: Request, res: Response) => {
+const getProductById = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   const { id } = req.params;
   const product = await db.product.findUnique({ where: { id } });
 
@@ -16,7 +22,10 @@ const getProductById = async (req: Request, res: Response) => {
   return res.json(product);
 };
 
-const createProduct = async (req: Request, res: Response) => {
+const createProduct = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   const { name, description, price } = req.body;
 
   if (!name || !description || !price)
@@ -31,7 +40,10 @@ const createProduct = async (req: Request, res: Response) => {
   return res.json(await db.product.create({ data: productData }));
 };
 
-const updateProduct = async (req: Request, res: Response) => {
+const updateProduct = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   const { id } = req.params;
   const { name, description, price } = req.body;
 
@@ -54,7 +66,10 @@ const updateProduct = async (req: Request, res: Response) => {
   return res.json(product);
 };
 
-const deleteProduct = async (req: Request, res: Response) => {
+const deleteProduct = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   const { id } = req.params;
 
   const product = await db.product.delete({ where: { id } });

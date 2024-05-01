@@ -3,11 +3,17 @@ import { Request, Response } from "express";
 
 const db = new PrismaClient();
 
-const getAllDepartments = async (req: Request, res: Response) => {
+const getAllDepartments = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   return res.json(await db.department.findMany());
 };
 
-const getDepartmentById = async (req: Request, res: Response) => {
+const getDepartmentById = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   const { id } = req.params;
   const department = await db.department.findUnique({ where: { id } });
 
@@ -17,7 +23,10 @@ const getDepartmentById = async (req: Request, res: Response) => {
   return res.json(department);
 };
 
-const createDepartment = async (req: Request, res: Response) => {
+const createDepartment = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   const { name, description } = req.body;
 
   if (!name || !description)
@@ -31,7 +40,10 @@ const createDepartment = async (req: Request, res: Response) => {
   return res.json(await db.department.create({ data: departmentData }));
 };
 
-const updateDepartment = async (req: Request, res: Response) => {
+const updateDepartment = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   const { id } = req.params;
   const { name, description } = req.body;
 
@@ -54,7 +66,10 @@ const updateDepartment = async (req: Request, res: Response) => {
   return res.json(department);
 };
 
-const deleteDepartment = async (req: Request, res: Response) => {
+const deleteDepartment = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   const { id } = req.params;
 
   const department = await db.department.delete({ where: { id } });

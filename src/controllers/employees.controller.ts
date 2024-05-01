@@ -3,11 +3,17 @@ import { Request, Response } from "express";
 
 const db = new PrismaClient();
 
-const getAllEmployees = async (req: Request, res: Response) => {
+const getAllEmployees = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   return res.json(await db.employee.findMany());
 };
 
-const getEmployeeById = async (req: Request, res: Response) => {
+const getEmployeeById = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   const { id } = req.params;
   const employee = await db.employee.findUnique({ where: { id } });
 
@@ -16,7 +22,10 @@ const getEmployeeById = async (req: Request, res: Response) => {
   return res.json(employee);
 };
 
-const createEmployee = async (req: Request, res: Response) => {
+const createEmployee = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   const { name, email, phone, address, salary } = req.body;
 
   if (!name || !email || !phone || !address || !salary)
@@ -33,7 +42,10 @@ const createEmployee = async (req: Request, res: Response) => {
   return res.json(await db.employee.create({ data: employeeData }));
 };
 
-const updateEmployee = async (req: Request, res: Response) => {
+const updateEmployee = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   const { id } = req.params;
   const { name, email, phone, address, salary } = req.body;
 
@@ -58,7 +70,10 @@ const updateEmployee = async (req: Request, res: Response) => {
   return res.json(employee);
 };
 
-const deleteEmployee = async (req: Request, res: Response) => {
+const deleteEmployee = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   const { id } = req.params;
 
   const employee = await db.employee.delete({ where: { id } });
