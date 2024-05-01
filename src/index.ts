@@ -5,12 +5,32 @@ import employeesRoutes from "./routes/employees.routes";
 import productsRoutes from "./routes/products.routes";
 
 class App {
-  private app: express.Application;
-  private routes: { path: string; routes: Router }[] = [];
-  private server: any;
+  private _app: express.Application;
+  private _routes: { path: string; routes: Router }[] = [];
+  private _server: any;
 
   constructor() {
-    this.app = express();
+    this._app = express();
+  }
+
+  public get app(): express.Application {
+    return this._app;
+  }
+
+  public get routes(): { path: string; routes: Router }[] {
+    return this._routes;
+  }
+
+  public set routes(routes: { path: string; routes: Router }[]) {
+    this._routes = routes;
+  }
+
+  public get server(): any {
+    return this._server;
+  }
+
+  public set server(server: any) {
+    this._server = server;
   }
 
   public addRoutes(path: string, routes: Router): void {
@@ -41,3 +61,5 @@ app.addRoutes("/api/", departmentsRoutes);
 app.addRoutes("/api/", employeesRoutes);
 app.addRoutes("/api/", productsRoutes);
 app.run("3000");
+
+export default app;
